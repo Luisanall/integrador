@@ -6,25 +6,25 @@ import lombok.Setter;
 public class Pronostico {
      @Setter
      @Getter
-     private String Partido;
+     private Partido partido;
      @Getter
      @Setter
-     private String Equipo;
+     private Equipo equipo;
      @Getter
      @Setter
-     private ResultadoEnum resultados;
+     private Resultado resultados;
 
-     public void Pronostico(String Partido, String Equipo, ResultadoEnum resultados) {
-          this.Partido = Partido;
-          this.Equipo = Equipo;
+     public void Pronostico(Partido partido, Equipo equipo,  Resultado resultados){
+          this.partido= partido;
+          this.equipo = equipo;
           this.resultados = resultados;
      }
 
-     public int puntos(int i) {
-
-     }
-
+     public int puntos() {
+     int result =0;
+     if (this.partido.resultados ( this.equipo) == this.resultados){
+     result = 1;
 }
+return result;
 
-
-}
+}}

@@ -21,7 +21,8 @@ public abstract class LecturaArchivo {
         private String partes[] = null;
         List<Partido> partidos = new ArrayList<> ();
 
-        public void leerArchivo (String ruta){
+
+    public void leerArchivo (String ruta){
             try {
                 lector = new BufferedReader ( new FileReader ( ruta ) );
                 leerArchivo ("\\C:\\Users\\PC\\Documents\\resultados.csv\\"  );
@@ -47,7 +48,7 @@ public abstract class LecturaArchivo {
         public void imprimirLinea() {
             for (int i = 0; i < partes.length; i++) ;
             System.out.println ( partes[0] + " |  " );
-            Ronda ronda = new Ronda (1, partidos.toArray (), 48, 1);
+            Ronda ronda = new Ronda (1, partidos.toArray (), 50, 1);
 
             List<Pronostico> pronosticos = new ArrayList<> ();
 
@@ -59,12 +60,13 @@ public abstract class LecturaArchivo {
                     String[] partes = linea.split ( ";" );
                     imprimirLinea ();
                     int id =  Integer.parseInt ( partes[0] );
-                    Partido partido = buscarPartidoporid (partidos, id);
+                    Partido partido = buscarPartido (partidos, id);
                     String empate = (partes [3]);
                     String ganados = (partes [4]);
-                    ResultadoEnum resultado = ResultadoEnum.ganador;
+                    Resultado resultado = Resultado.ganador;
                     Equipo equipo =partido.getEquipo1 ();
-                    if (empate == "x"){ equipo= partido.getEquipo1 (); ResultadoEnum = Resultados.empate;}
+                    if (empate == "x"){ resultado= Resultado.empate;
+                    }
                     if (ganados== "x") {equipo = partido.getEquipo2 ();}
                     Pronostico pronostico = new Pronostico ();
                     pronosticos.add ( pronostico );
@@ -73,5 +75,6 @@ public abstract class LecturaArchivo {
                 }
             } catch (IOException e) {
                 throw new RuntimeException ( e );
+
             }
         }}

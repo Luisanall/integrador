@@ -23,7 +23,7 @@ public class Partido {
         this.golesEquipo1 = golesEquipo1;
         this.golesEquipo2 = golesEquipo2;
     }
-    public  ResultadoEnum resultados (Equipo unEquipo){
+    public  Resultado resultados (Equipo unEquipo){
         if (this.golesEquipo1 == this.getGolesEquipo2 ()) {
             return  Resultado.empate;
         }
@@ -31,7 +31,7 @@ public class Partido {
             return Resultado.ganador;
         }else return Resultado.perdedor;
     }
-    return Resultado.desconocido;
+
 
 
 
