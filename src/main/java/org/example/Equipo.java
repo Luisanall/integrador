@@ -13,10 +13,8 @@ public class Equipo {
 
     public Equipo(String nombre) {
         this.nombre = nombre;
-        this.descripcion = null;
+        this.descripcion = descripcion;
     }
 
-    public String getNombre() {
-        return nombre;
     }
-}
+

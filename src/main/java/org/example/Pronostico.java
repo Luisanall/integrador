@@ -14,7 +14,7 @@ public class Pronostico {
      @Setter
      private Resultado resultados;
 
-     public void Pronostico(Partido partido, Equipo equipo,  Resultado resultados){
+     public Pronostico(Partido partido, Equipo equipo, Resultado resultados){
           this.partido= partido;
           this.equipo = equipo;
           this.resultados = resultados;

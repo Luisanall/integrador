@@ -14,8 +14,8 @@ public class Ronda {
      private int puntos;
      public  Ronda (int id, Object[] variosPartidos, int Unnumero, int puntaje){
          this.id = id;
-         this.partidos = variosPartidos;
-         this.numero = Unnumero;
+         this.partidos = (Partido[]) variosPartidos;
+         this.numero = String.valueOf ( Unnumero );
          this.puntos = puntaje;
      }
 }
