@@ -1,22 +1,16 @@
 package org.example;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+
 
 public class Main {
-    public static void main (String[] args) throws FileNotFoundException {
 
 
-
-
-
-
+    public static void main(String[] args) {
+     LecturaArchivo archivo = new LecturaArchivo ();
+     archivo.leerArchivo ("C:\\Users\\PC\\Documents\\Pronosticos.csv");
+     archivo.leerArchivo ( "C:\\Users\\PC\\Documents\\Resultados.csv " );
 
 
 
     }}
-
-
-
-
-
