@@ -1,25 +1,30 @@
-package org.example;
+package Programa;
+
+
+import org.example.*;
 
 import javax.swing.*;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class LecturaArchivo {
-    List<Partido> partidos = new ArrayList<> ();
+    Path rutaResultado = Paths.get ( "C:\\Users\\PC\\Documents\\Resultados.csv" );
+    Path rutaPronostico = Paths.get ( "C:\\Users\\PC\\Documents\\Pronosticos.csv" );
 
+    ArrayList<Partido> partidos = new ArrayList<> ();
 
-
-    public  void leerArchivo(String s) {
-        try {BufferedReader  reader = new BufferedReader ( new FileReader ( "C:\\Users\\PC\\Documents\\Resultados.csv"));
+    {  try {BufferedReader  reader = Files.newBufferedReader (rutaResultado, StandardCharsets.UTF_8);
             String linea;
             linea = reader.readLine ();
             while ((linea = reader.readLine ()) != null) {
                 String[] partes = linea.split ( ";" );
-                imprimirLinea ();
                 int id = Integer.parseInt ( partes[0] );
                 Equipo equipo1 = new Equipo ( partes[1] );
                 int golesEquipo1 = Integer.parseInt ( partes[2] );
@@ -28,28 +33,26 @@ public class LecturaArchivo {
                 Partido partido = new Partido ( id, equipo1, golesEquipo1, golesEquipo2,equipo2 );
                 partidos.add ( partido );
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             JOptionPane.showMessageDialog ( null, e );
         }
     }
 
     public void imprimirLinea() throws RuntimeException {
-        String[] partes = new String[0];
+        String[] partes = new String[1];
         for (int i = 0; i < partes.length; i++) ;
-        partes = new String[0];
+        partes = new String[1];
         System.out.println ( partes[0] + " |  " );
 
         Ronda ronda = new Ronda ( 1, partidos.toArray (), 50, 1 );
 
         List<Pronostico> pronosticos = new ArrayList<> ();
 
-        try {
-            BufferedReader read = new BufferedReader ( new FileReader ( "C:\\Users\\PC\\Documents\\Pronosticos.csv"));
+        try {BufferedReader  read = Files.newBufferedReader (rutaPronostico, StandardCharsets.UTF_8);;
             String linea;
             linea = read.readLine ();
             while ((linea = read.readLine ()) != null) {
                 partes = linea.split ( ";" );
-                imprimirLinea ();
                 int id = Integer.parseInt ( partes[0] );
                 Partido partido = (buscarPartido ( partidos, id ));
 
@@ -95,5 +98,8 @@ public class LecturaArchivo {
 
 
         return null;
+    }
+
+ {
     }
 }
