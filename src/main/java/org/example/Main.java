@@ -7,23 +7,13 @@ public class Main {
 
 
 
-    public static void main(String[] args) throws ArrayIndexOutOfBoundsException {
-     LecturaArchivo archivo;
-        archivo = new LecturaArchivo ();
-        archivo.imprimirLinea ();
+    public static void main(String[] args)  throws ArrayIndexOutOfBoundsException {
 
+        LecturaArchivo archivo = new LecturaArchivo ();
 
-
-
-
-
-
-        }
-
-
-
-
-
-
+            archivo.imprimirLinea ();
 
     }
+
+
+}

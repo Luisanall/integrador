@@ -3,6 +3,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class Pronostico {
+
      @Setter
      @Getter
      private Partido partido;

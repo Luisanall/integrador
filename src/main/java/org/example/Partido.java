@@ -4,8 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 
-
 public class Partido {
+    @Setter @Getter
+    private int ronda;
     @Getter
     @Setter
     private int id;
@@ -23,7 +24,8 @@ public class Partido {
     private int golesEquipo2;
 
 
-    public Partido(int id, Equipo equipo1, int golesEquipo1, int golesEquipo2,Equipo equipo2) {
+    public Partido( int ronda , int id, Equipo equipo1, int golesEquipo1, int golesEquipo2,Equipo equipo2) {
+        this.ronda = ronda;
         this.id = id;
         this.equipo1 = equipo1;
         this.golesEquipo1 = golesEquipo1;
