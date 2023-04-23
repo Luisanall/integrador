@@ -6,45 +6,45 @@ import lombok.Setter;
 
 public class Partido {
     @Setter @Getter
-    private int ronda;
+    private int Ronda;
     @Getter
     @Setter
     private int id;
     @Getter
     @Setter
-    private Equipo equipo1;
+    private String Equipo1;
     @Getter
     @Setter
-    private Equipo equipo2;
+    private String Equipo2;
     @Getter
     @Setter
-    private int golesEquipo1;
+    private int CantidadGoles1;
     @Getter
     @Setter
-    private int golesEquipo2;
+    private int CantidadGoles2;
 
 
-    public Partido( int ronda , int id, Equipo equipo1, int golesEquipo1, int golesEquipo2,Equipo equipo2) {
-        this.ronda = ronda;
+    public Partido(int Ronda , int id, String Equipo1, int CantidadGoles1, int CantidadGoles2, String Equipo2) {
+        this.Ronda = Ronda;
         this.id = id;
-        this.equipo1 = equipo1;
-        this.golesEquipo1 = golesEquipo1;
-        this.golesEquipo2 = golesEquipo2;
-        this.equipo2 = equipo2;
+        this.Equipo1 = Equipo1;
+        this.CantidadGoles1 = CantidadGoles1;
+        this.CantidadGoles2= CantidadGoles2;
+        this.Equipo2 = Equipo2;
     }
 
 
     public Resultado resultados(Equipo unEquipo) {
-        if (this.golesEquipo1 == this.getGolesEquipo2 ()) {
+        if (this.CantidadGoles1 == this.getCantidadGoles2 ()) {
             return Resultado.empate;
         }
-        if (this.equipo1.getNombre () == unEquipo.getNombre ()) {
-            if (this.golesEquipo1 > this.golesEquipo2) {
+        if (this.Equipo1 == unEquipo.getNombre ()) {
+            if (this.CantidadGoles1 > this.CantidadGoles2) {
                 return Resultado.ganador;
             } else return Resultado.perdedor;
         }
-        if (this.equipo2.getNombre () == unEquipo.getNombre ()) {
-            if (this.golesEquipo1 < this.golesEquipo2) {
+        if (this.Equipo2 == unEquipo.getNombre ()) {
+            if (this.CantidadGoles2 > this.CantidadGoles1) {
                 return Resultado.ganador;
             } else return Resultado.perdedor;
 

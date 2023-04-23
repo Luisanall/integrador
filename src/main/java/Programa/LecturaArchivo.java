@@ -1,122 +1,97 @@
-package Programa;
+//package Programa;
 
-import org.example.*;
+//import org.example.Partido;
+//import org.example.Pronostico;
+//import org.example.Resultado;
+//import org.example.Ronda;
 
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+//import java.sql.Connection;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.sql.Statement;
+//import java.util.ArrayList;
+//import static org.example.Resultado.ganador;
 
-public  class LecturaArchivo {
-    private  String linea;
-    private String[] partes = null;
+//public  class LecturaArchivo {
+  //  Connection cn = null;
+    //Statement stm = null;
+    //ResultSet rs = null;
+      //  ArrayList<Partido> partidos = new ArrayList<> ();
 
-    Path rutaResultado = Paths.get ( "C:\\Users\\PC\\Documents\\Resultados.csv" );
-    Path rutaPronostico = Paths.get ( "C:\\Users\\PC\\Documents\\Pronosticos.csv" );
+    //{
+      //  try {
+        //    rs = stm.executeQuery ( "SELECT* FROM Resultado" );
+          //  while (rs.next ()){
+            //    int Ronda = rs.getInt ( 1 );
+              // int id  =  rs.getInt ( 2 );
+               //String Equipo1 = rs.getString ( 3 );
+                //int CantidadGoles1 = rs.getInt ( 4 );
+                //int CantidadGoles2 = rs.getInt ( 5 );
+               //String Equipo2 = rs.getString ( 6 );
 
-        ArrayList<Partido> partidos = new ArrayList<> ();
+                //Partido partido = new Partido ( Ronda, id, Equipo1, CantidadGoles1, CantidadGoles2, Equipo2);
+               // partidos.add ( partido );
 
-    {
-        try {
-            BufferedReader reader = Files.newBufferedReader ( rutaResultado, StandardCharsets.UTF_8 );
-           linea = reader.readLine ();
-            while ((linea = reader.readLine ()) != null) {
-                partes = linea.split ( ";" );
-                imprimirLinea ( );
-                System.out.println ();
-                int ronda = Integer.parseInt ( partes[0] );
-                int id = Integer.parseInt ( partes[1] );
-                Equipo equipo1 = new Equipo ( partes[2] );
-                int golesEquipo1 = Integer.parseInt ( partes[3] );
-                int golesEquipo2 = Integer.parseInt ( partes[4] );
-                Equipo equipo2 = new Equipo ( partes[5] );
-                Partido partido = new Partido ( ronda, id, equipo1, golesEquipo1, golesEquipo2, equipo2 );
-                partidos.add ( partido );
-            }
-            reader.close ();
-            linea =null;
-            partes= null;
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog ( null, e );
-        }}
+                 //   rs = stm.executeQuery ( "SELECT * FROM Pronostico " );
+                //while (rs.next ()){
+                  //  String Participante = rs.getString ( 1 );
+                    //System.out.print ( Participante );
 
-    public void imprimirLinea() throws RuntimeException {
-        String[] partes = new String[1];
-        for (int i = 0; i < partes.length; i++) ;
-        partes = new String[1];
-        try {
-            System.out.println ( Files.readString (  rutaPronostico ) + rutaResultado.compareTo ( rutaPronostico ) + "   |   ");
-        } catch (IOException e) {
-            throw new RuntimeException ( e );
-        }
+                     //id = rs.getInt ( 2 );
+                     //Equipo1 = rs.getString ( 3 );
+                   // int gana1 = rs.getInt ( 4 );
+                   // int empate = rs.getInt ( 5 );
+                    //int gana2 = rs.getInt ( 6 );
+                    // Equipo2 = rs.getString ( 7 );
+                    //Resultado resultado = ganador;
+                    //if (partido != null) {
+                     //   if (CantidadGoles1< CantidadGoles2){
+                       //     Equipo1 = String.valueOf (Resultado.ganador );
+                         //   gana1 = 1;
+                           // if (CantidadGoles1 > CantidadGoles2){
+                             //   Equipo1 = String.valueOf ( Resultado.perdedor );
+                               // gana2 = 1;
+                                //if (CantidadGoles1 == CantidadGoles2){
+                                  //  Equipo1 = String.valueOf ( Resultado.empate );
+                                   // Equipo2 = String.valueOf ( Resultado.empate );
+                                    //empate= 1;
+                               // }
+                           // }
+                       // }
+           // }
 
-        Ronda ronda = new Ronda ( 1, partidos.toArray (), 50, 1 );
+       // }
+       // }
+        //Ronda ronda = new Ronda ( 1, partidos.toArray (), 50, 1 );
 
-            List<Pronostico> pronosticos = new ArrayList<> ();
-
-            try {
-                BufferedReader read = Files.newBufferedReader ( rutaPronostico, StandardCharsets.UTF_8 );
-                String linea;
-                linea = read.readLine ();
-                while ((linea = read.readLine ()) != null) {
-                    partes = linea.split ( ";" );
-                    int id = Integer.parseInt ( partes[1] );
-                    Partido partido = (buscarPartido ( partidos, id ));
-
-                    String empata = (partes[3]);
-                    String gana2 = (partes[4]);
-                    Resultado resultado = Resultado.ganador;
-                    if (partido != null) {
-                        Equipo equipo = partido.getEquipo1 ();
-                        if (empata.equals ( "x" )) {
-                            resultado = Resultado.empate;
-                            System.out.println ( equipo.getNombre () + Resultado.empate );
-                        }
-                        if (gana2.equals ( "x" )) {
-                            equipo = partido.getEquipo2 ();
-                            System.out.println ( equipo.getNombre () + Resultado.ganador );
-                        } else {
-                            System.out.println ( equipo.getNombre () + Resultado.perdedor );
-                        }
-                        Pronostico pronostico = new Pronostico ( partido, equipo, resultado );
-                        pronosticos.add ( pronostico );
-                        read.close ();
-                        linea = null;
-                        partes = null;
-
-                    }
-                }
-
-                for (Partido partido : partidos) {
-                    System.out.println ( "id " +ronda.getId ()+ "   "+  partido.getId () + "   " + partido.getEquipo1 ().getNombre () + "  " + partido.getGolesEquipo1 () + "  " + partido.getEquipo2 ().getNombre () + "  " + partido.getGolesEquipo2 () );
-                }
-                int totalpuntos = 0;
-                for (Pronostico pronostico : pronosticos) {
-                    System.out.println ( "id " +pronostico.getParticipante ()+ "  "+ pronostico.getPartido ().getId () + "  " + pronostico.getPartido ().getEquipo2 ().getNombre () + " " + pronostico.getResultados () + " " + pronostico.getPartido ().resultados ( pronostico.getEquipo () ) + "\n" );
-
-                    totalpuntos = totalpuntos + pronostico.puntos ();
-                }
-                System.out.println ( "el total es :  " + ronda.getPuntos ()* totalpuntos );
+          //  List<Pronostico> pronosticos = new ArrayList<> ();
 
 
-            } catch (IOException e) {
-                throw new RuntimeException ( e );
-            }
+            //    for (Partido partido : partidos) {
+              //      System.out.println ( "id " +ronda.getId ()+ "   "+  partido.getId () + "   " + partido.getEquipo1 () + "  " + partido.getCantidadGoles1 () + "  " + partido.getEquipo2 () + "  " + partido.getCantidadGoles2 () );
+               // }
+                //int totalpuntos = 0;
+                //for (Pronostico pronostico : pronosticos) {
+                  //  System.out.println ( "id " +pronostico.getParticipante ()+ "  "+ pronostico.getPartido ().getId () + "  " + pronostico.getPartido ().getEquipo2 ()+ " " + pronostico.getResultados () + " " + pronostico.getPartido ().resultados ( pronostico.getEquipo () ) + "\n" );
+
+                    //totalpuntos = totalpuntos + pronostico.puntos ();
+               // }
+               // System.out.println ( "el total es :  " + ronda.getPuntos ()* totalpuntos );
 
 
-        }
+           // } catch ( SQLException e) {
+             //   throw new RuntimeException ( e );
+           // }
 
-    private Partido buscarPartido(ArrayList<Partido> partidos, int id) {
-        {
-            for (Partido partido : partidos) {
-                if (partido.getId () == id) {
-                }
-            }
-        }
-        return null;
-    }}
+
+       // }
+
+    //private Partido buscarPartido(ArrayList<Partido> partidos, int id) {
+      //  {
+        //    for (Partido partido : partidos) {
+          //      if (partido.getId () == id) {
+            //    }
+        //    }
+       // }
+       // return null;
+   // }}
