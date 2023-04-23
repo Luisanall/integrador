@@ -3,6 +3,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 public class Pronostico {
+     @Setter @Getter
+     private Participante participante;
 
      @Setter
      @Getter
@@ -15,6 +17,7 @@ public class Pronostico {
      private Resultado resultados;
 
      public Pronostico(Partido partido, Equipo equipo, Resultado resultados){
+          this.participante = participante;
           this.partido= partido;
           this.equipo = equipo;
           this.resultados = resultados;

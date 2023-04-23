@@ -12,7 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LecturaArchivo {
+public  class LecturaArchivo {
     private  String linea;
     private String[] partes = null;
 
@@ -49,9 +49,13 @@ public class LecturaArchivo {
         String[] partes = new String[1];
         for (int i = 0; i < partes.length; i++) ;
         partes = new String[1];
-        System.out.println ( partes[0] + " |  " );
+        try {
+            System.out.println ( Files.readString (  rutaPronostico ) + rutaResultado.compareTo ( rutaPronostico ) + "   |   ");
+        } catch (IOException e) {
+            throw new RuntimeException ( e );
+        }
 
-            Ronda ronda = new Ronda ( 1, partidos.toArray (), 50, 1 );
+        Ronda ronda = new Ronda ( 1, partidos.toArray (), 50, 1 );
 
             List<Pronostico> pronosticos = new ArrayList<> ();
 
@@ -89,15 +93,15 @@ public class LecturaArchivo {
                 }
 
                 for (Partido partido : partidos) {
-                    System.out.println ( "id " + partido.getId () + "   " + partido.getEquipo1 ().getNombre () + "  " + partido.getGolesEquipo1 () + "  " + partido.getEquipo2 ().getNombre () + "  " + partido.getGolesEquipo2 () );
+                    System.out.println ( "id " +ronda.getId ()+ "   "+  partido.getId () + "   " + partido.getEquipo1 ().getNombre () + "  " + partido.getGolesEquipo1 () + "  " + partido.getEquipo2 ().getNombre () + "  " + partido.getGolesEquipo2 () );
                 }
                 int totalpuntos = 0;
                 for (Pronostico pronostico : pronosticos) {
-                    System.out.println ( "id " + pronostico.getPartido ().getId () + "  " + pronostico.getPartido ().getEquipo1 ().getNombre () + " " + pronostico.getResultados () + " " + pronostico.getPartido ().resultados ( pronostico.getEquipo () ) + "\n" );
+                    System.out.println ( "id " +pronostico.getParticipante ()+ "  "+ pronostico.getPartido ().getId () + "  " + pronostico.getPartido ().getEquipo2 ().getNombre () + " " + pronostico.getResultados () + " " + pronostico.getPartido ().resultados ( pronostico.getEquipo () ) + "\n" );
 
                     totalpuntos = totalpuntos + pronostico.puntos ();
                 }
-                System.out.println ( "el total es :  " + ronda.getPuntos () * totalpuntos );
+                System.out.println ( "el total es :  " + ronda.getPuntos ()* totalpuntos );
 
 
             } catch (IOException e) {
