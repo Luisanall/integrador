@@ -5,111 +5,111 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
-
-import static org.example.Resultado.ganador;
 
 public class Main {
 
 
     public static void main(String[] args) throws ArrayIndexOutOfBoundsException {
+        String Participante;
+        //usamos metodo scanner para buscar el nombre del participante
+
         Scanner Scan = new Scanner ( System.in );
         System.out.print ( " Introduzca nombre de participante  " );
-
+        Participante = Scan.nextLine ();
+        //llamamos a la base de Datos
         DataBase conexion = new DataBase ();
+        //Declaramos variables que vamos a usar mas adelante
         Connection cn = null;
         Statement stm = null;
         ResultSet rs = null;
-        try {
-            cn = conexion.conectar ();
-            stm = cn.createStatement ();
-            ArrayList<Partido> partidos = new ArrayList<> ();
+        ResultSet rs1 = null;
 
-            {
-                try {
+
+        try {
+            try {
+                //crea la conxion con la base de datos
+                cn = conexion.conectar ();
+                stm = cn.createStatement ();
+
+                //lee tabla en  base de pronosticos
+                rs1 = stm.executeQuery ( "SELECT COUNT (*) FROM Pronostico  WHERE Participante = " + Participante + " " );
+                while (rs1.next ()) {
+
+                    //identificacion de columnas en pronostico
+                    Participante = rs1.getString ( 1 );
+                    int id = rs1.getInt ( 2 );
+                    String Equipo1 = rs1.getString ( 3 );
+                    int gana1 = rs1.getInt ( 4 );
+                    int empate = rs1.getInt ( 5 );
+                    int gana2 = rs1.getInt ( 6 );
+                    String Equipo2 = rs1.getString ( 7 );
+                    int totalpuntos = 0;
+
                     //lee tabla Resultado en base de datos
-                    rs = stm.executeQuery ( "SELECT* FROM Resultado" );
+                    rs = stm.executeQuery ( "SELECT * FROM Resultado WHERE Equipo1 = " + Equipo1 + "AND Equipo2 = " + Equipo2 + " " );
                     while (rs.next ()) {
+
                         //identificación de posicion de columnas
                         int Ronda = rs.getInt ( 1 );
-                        int id = rs.getInt ( 2 );
-                        String Equipo1 = rs.getString ( 3 );
+                        id = rs.getInt ( 2 );
+                        Equipo1 = rs.getString ( 3 );
                         int CantidadGoles1 = rs.getInt ( 4 );
                         int CantidadGoles2 = rs.getInt ( 5 );
-                        String Equipo2 = rs.getString ( 6 );
+                        Equipo2 = rs.getString ( 6 );
 
-                        Partido partido = new Partido ( Ronda, id, Equipo1, CantidadGoles1, CantidadGoles2, Equipo2 );
-                        partidos.add ( partido );
-                        //lee tabla en  base de pronosticos
 
-                        rs = stm.executeQuery ( "SELECT * FROM Pronostico " );
-                        while (rs.next ()) {
-                            //identificacion de columnas en pronostico
-                            String Participante = rs.getString ( 1 );
-                            id = rs.getInt ( 2 );
-                            Equipo1 = rs.getString ( 3 );
-                            int gana1 = rs.getInt ( 4 );
-                            int empate = rs.getInt ( 5 );
-                            int gana2 = rs.getInt ( 6 );
-                            Equipo2 = rs.getString ( 7 );
-                            //comparacion de resultados para clasificarlos como ganador, perdedor o empatados
-                            Resultado resultado = ganador;
-                            if (partido != null) {
-                                if (CantidadGoles1 < CantidadGoles2) {
-                                    Equipo1 = String.valueOf ( Resultado.ganador );
-                                    gana1 = 1;
-                                    if (CantidadGoles1 > CantidadGoles2) {
-                                        Equipo1 = String.valueOf ( Resultado.perdedor );
-                                        gana2 = 1;
-                                        if (CantidadGoles1 == CantidadGoles2) {
-                                            Equipo1 = String.valueOf ( Resultado.empate );
-                                            Equipo2 = String.valueOf ( Resultado.empate );
-                                            empate = 1;
-                                        }
-                                    }
-                                }
-                            }
+                        //comparacion de resultados para clasificarlos como ganador, perdedor o empatados
 
+                        if (gana1 == 1 && CantidadGoles1 > CantidadGoles2) {
+
+                            Equipo1 = "ganador";
+                            totalpuntos++;
+
+                        } else if (gana2 == 1 && CantidadGoles1 < CantidadGoles2) {
+                            Equipo1 = "perdedor";
+                            totalpuntos++;
+
+                        } else if (empate == 1 && CantidadGoles1 == CantidadGoles2) {
+                            Equipo1 = "empate";
+                            Equipo2 = "empate";
+                            totalpuntos++;
                         }
+                        System.out.print ( "total de puntos es:  " );
+                        System.out.println ( "El participante  " + Participante+ "obtuvo  " + totalpuntos);
+
                     }
-                    Ronda ronda = new Ronda ( 1, partidos.toArray (), 50, 1 );
-
-                    List<Pronostico> pronosticos = new ArrayList<> ();
+                }
 
 
-                    for (Partido partido : partidos) {
-                        System.out.println ( "id " + ronda.getId () + "   " + partido.getId () + "   " + partido.getEquipo1 () + "  " + partido.getCantidadGoles1 () + "  " + partido.getEquipo2 () + "  " + partido.getCantidadGoles2 () );
+
+            } catch (SQLException e) {
+                System.out.println ( "ocurrió un error en conex a Base de Datos" );
+
+
+            } finally {
+                try {
+                    if (rs != null && rs1 != null) {
+                        rs.close ();
+                        rs1.close ();
                     }
-                    int totalpuntos = 0;
-                    for (Pronostico pronostico : pronosticos) {
-                        System.out.println ( "id " + pronostico.getParticipante () + "  " + pronostico.getPartido ().getId () + "  " + pronostico.getPartido ().getEquipo2 () + " " + pronostico.getResultados () + " " + pronostico.getPartido ().resultados ( pronostico.getEquipo () ) + "\n" );
-
-                        totalpuntos = totalpuntos + pronostico.puntos ();
+                    if (stm != null) {
+                        stm.close ();
                     }
-                    System.out.println ( "el total es :  " + ronda.getPuntos () * totalpuntos );
-
-
+                    if (cn != null) {
+                        cn.close ();
+                    }
                 } catch (SQLException e) {
-                    System.out.println ( "ocurrió un error en conex a Base de Datos" );
-
+                    System.out.println ( "Ocurrió un error al cerrar base de Datos " );
                 }
 
 
             }
+        } finally {
 
-
-        } catch (SQLException e) {
-            throw new RuntimeException ( e );
         }
-
-    }
     }
 
 
-
-
-
-
+    }
 
